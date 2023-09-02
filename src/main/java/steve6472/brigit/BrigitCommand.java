@@ -46,8 +46,6 @@ public abstract class BrigitCommand
 	{
 		if (getName() == null || getName().isBlank())
 			throw new NullPointerException("Command name not specified and will not be registered");
-
-		Brigit.addBrigitCommand(this);
 	}
 
 	public abstract void register(CommandDispatcher<CommandSourceStack> dispatcher);
