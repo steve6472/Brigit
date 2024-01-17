@@ -23,6 +23,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
  * Project: Brigit
  *
  ***********************/
+@SuppressWarnings("unused")
 public abstract class BrigitCommand
 {
 	public BrigitCommand()
@@ -224,8 +226,7 @@ public abstract class BrigitCommand
 
 	protected Enchantment getEnchantment(CommandContext<CommandSourceStack> context, String name) throws CommandSyntaxException
 	{
-		//noinspection deprecation
-		return Enchantment.getByKey(new NamespacedKey("minecraft", ResourceArgument.getEnchantment(context, name).key().location().getPath()));
+		return Registry.ENCHANTMENT.get(minecraftKey(ResourceArgument.getEnchantment(context, name).key().location().getPath()));
 	}
 
 	/* Effect Argument */
@@ -237,8 +238,7 @@ public abstract class BrigitCommand
 
 	protected PotionEffectType getPotionEffect(CommandContext<CommandSourceStack> context, String name) throws CommandSyntaxException
 	{
-		//noinspection deprecation
-		return PotionEffectType.getByKey(new NamespacedKey("minecraft", ResourceArgument.getMobEffect(context, name).key().location().getPath()));
+		return Registry.EFFECT.get(minecraftKey(ResourceArgument.getMobEffect(context, name).key().location().getPath()));
 	}
 
 	/* Entity Type Argument */
@@ -250,8 +250,7 @@ public abstract class BrigitCommand
 
 	protected org.bukkit.entity.EntityType getEntityType(CommandContext<CommandSourceStack> context, String name) throws CommandSyntaxException
 	{
-		//noinspection deprecation
-		return getBukkitEntity(new NamespacedKey("minecraft", ResourceArgument.getEntityType(context, name).key().location().getPath()));
+		return getBukkitEntity(minecraftKey(ResourceArgument.getEntityType(context, name).key().location().getPath()));
 	}
 
 	private static org.bukkit.entity.EntityType[] ENTITY_TYPES;
@@ -366,5 +365,15 @@ public abstract class BrigitCommand
 	protected World getWorld(CommandContext<CommandSourceStack> context)
 	{
 		return getWorld(context.getSource());
+	}
+
+	/*
+	 * Util methods
+	 */
+
+	private static NamespacedKey minecraftKey(String path)
+	{
+		//noinspection UnstableApiUsage
+		return new NamespacedKey("minecraft", path);
 	}
 }

@@ -31,6 +31,7 @@ import java.util.Map;
  * Project: Brigit
  *
  ***********************/
+@SuppressWarnings("unused")
 public final class Brigit extends JavaPlugin implements Listener
 {
 	private static Brigit INSTANCE;
@@ -106,14 +107,6 @@ public final class Brigit extends JavaPlugin implements Listener
 		if (commandList.isEmpty())
 			getInstance().commands.remove(plugin.getName());
 	}
-
-//	public static void updateAllCommands()
-//	{
-//		for (Player player : Bukkit.getOnlinePlayers())
-//		{
-//			player.updateCommands();
-//		}
-//	}
 
 	/*
 	 * Bukkit permissions fix
